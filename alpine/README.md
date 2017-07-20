@@ -12,7 +12,7 @@ cd gobstoppers/alpine && \
 
 By default is going to use as image name `kafebob/rpi-alpine` and as tag version `3.6`
 
-You can changes these values creating two environment variables
+You can change these values creating two environment variables
 including your custom values
 
 ```
@@ -22,17 +22,16 @@ export ALPINE_CUSTOM_IMAGE=kafebob/rpi-alpine
 
 ## Alpine Base
 
-This image includes [S6 overlay](https://github.com/just-containers/s6-overlay) and a Dnsmasq hack
+This image includes [S6 overlay](https://github.com/just-containers/s6-overlay) and a Dnsmasq hack inspired from [sillelien/base-alpine](https://github.com/sillelien/base-alpine) image
 
-Either you could
+Either you could pull the image from Docker Hub
 
 ```
 sudo docker pull kafebob/rpi-alpine-base
 ```
 
-or to build the image locally
+or you could the image locally
 
 ```
-cd base && \
-sudo docker build -t kafebob/rpi-alpine-base:latest .
+sudo docker build -t kafebob/rpi-alpine-base:latest base
 ```
