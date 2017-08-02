@@ -12,8 +12,7 @@ cd gobstoppers/alpine && \
 
 By default is going to use as image name `kafebob/rpi-alpine` and as tag version `3.6`
 
-You can change these values creating two environment variables
-including your custom values
+You can change these names creating two environment variables
 
 ```
 export ALPINE_VERSION=3.6  && \
@@ -30,7 +29,7 @@ Either you could pull the image from Docker Hub
 sudo docker pull kafebob/rpi-alpine-base
 ```
 
-or you could the image locally
+or you could use the image locally
 
 ```
 sudo docker build -t kafebob/rpi-alpine-base:latest base
