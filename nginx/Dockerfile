@@ -1,4 +1,4 @@
-FROM FROM kafebob/rpi-alpine-base:3.6
+FROM kafebob/rpi-alpine-base:3.6
 
 MAINTAINER Luis Toubes <luis@toubes>
 
@@ -73,7 +73,6 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& export GNUPGHOME="$(mktemp -d)" \
 	&& found=''; \
 	for server in \
-		ha.pool.sks-keyservers.net \
 		hkp://keyserver.ubuntu.com:80 \
 		hkp://p80.pool.sks-keyservers.net:80 \
 		pgp.mit.edu \
@@ -149,7 +148,3 @@ EXPOSE 80
 STOPSIGNAL SIGTERM
 
 # No need CMD or ENTRYPOINT, nginx is started as a service by S6
-
-
-
-
