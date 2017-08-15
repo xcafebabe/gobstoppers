@@ -6,6 +6,8 @@ MAINTAINER Luis Toubes <luis@toubes>
 # https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile
 
 ENV NGINX_VERSION 1.13.3
+ENV NGINX_DIFFIE_HELLMAN off
+ENV NGINX_SERVERNAME
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& CONFIG="\
@@ -99,9 +101,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& make install \
 	&& rm -rf /etc/nginx/html/ \
 	&& mkdir /etc/nginx/conf.d/ \
-	&& mkdir -p /usr/share/nginx/html/ \
-	&& install -m644 html/index.html /usr/share/nginx/html/ \
-	&& install -m644 html/50x.html /usr/share/nginx/html/ \
+	&& mkdir -p /var/www/ \
+	&& install -m644 html/index.html /var/www/ \
+	&& install -m644 html/50x.html /var/www/ \
 	&& install -m755 objs/nginx-debug /usr/sbin/nginx-debug \
 	&& install -m755 objs/ngx_http_xslt_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_xslt_filter_module-debug.so \
 	&& install -m755 objs/ngx_http_image_filter_module-debug.so /usr/lib/nginx/modules/ngx_http_image_filter_module-debug.so \
@@ -133,14 +135,14 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	\
 	# forward request and error logs to docker log collector
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
-	&& ln -sf /dev/stderr /var/log/nginx/error.log \
-  && mkdir -p /var/www && chown nginx:nginx /var/www
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
+	&& mkdir /etc/nginx/certs/
 
 # Add files
 ADD root /
 
 # Expose volumes
-VOLUME ["/etc/nginx/conf.d", "/var/www"]
+VOLUME ["/etc/nginx/conf.d", "/etc/nginx/certs", $NGINX_WWW_LOCATION]
 
 # Expose port
 EXPOSE 80

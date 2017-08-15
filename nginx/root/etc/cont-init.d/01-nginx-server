@@ -1,0 +1,43 @@
+#!/usr/bin/with-contenv sh
+
+NGINX_PATH=/etc/nginx
+NGINX_CERTS_PATH=$NGINX_PATH/certs
+
+if [ -z "$NGINX_SERVERNAME" ]; then
+  if [ ! -f "$NGINX_PATH/conf.d/default.conf"]; then
+    cp $NGINX_PATH/default.conf.sample $NGINX_PATH/conf.d/default.conf
+  fi
+else # SSL IS ENABLED
+  echo "SSL is enabled"
+  if [ ! -f "$NGINX_CERTS_PATH/$NGINX_SERVERNAME.pem" ]; then
+      echo "Generating self-signed certificates ..."
+      echo "Notice: You can overwrite these certificates with trusted letsencrypt certificates"
+      echo "        Just use the kafebob/rpi-dehydrated image!"
+
+      openssl genrsa -out $NGINX_CERTS_PATH/$NGINX_SERVERNAME.key 4096
+      openssl req -new -sha256 -batch -subj "/CN=$NGINX_SERVERNAME" -key $NGINX_CERTS_PATH/$NGINX_SERVERNAME.key -out $NGINX_CERTS_PATH/$NGINX_SERVERNAME.csr
+      openssl x509 -req -sha256 -days 3650 -in $NGINX_CERTS_PATH/$NGINX_SERVERNAME.csr -signkey $NGINX_CERTS_PATH/$NGINX_SERVERNAME.key -out $NGINX_CERTS_PATH/$NGINX_SERVERNAME.pem
+  fi
+
+  # Activate Diffie-Hellman for TLS
+  if [ ! -f "$NGINX_CERTS_PATH/dhparam.pem" ] && [ "$NGINX_DIFFIE_HELLMAN" == "on" ]; then
+    echo "Will generate a 2048-bit long Diffie-Hellman Params File (go for a 20 minutes break)"
+
+    openssl dhparam -out $NGINX_CERTS_PATH/dhparam.pem 2048
+  fi
+
+  if [ ! -f "$NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf"]; then
+    cp $NGINX_PATH/default-ssl.conf.sample $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
+
+    sed -i "s@#ssl_certificate@ssl_certificate $NEXTCLOUD_CERT_DIR/$NGINX_SERVERNAME.crt;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
+    sed -i "s@#ssl_certificate_key@ssl_certificate_key $NEXTCLOUD_CERT_DIR/$NGINX_SERVERNAME.key;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
+
+    if [ -f "$NGINX_CERTS_PATH/dhparam.pem" ]; then
+      sed -i "s@#ssl_dhparam@ssl_dhparam $NEXTCLOUD_CERT_DIR/dhparam.pem;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
+    fi
+  fi
+fi
+
+
+
+
