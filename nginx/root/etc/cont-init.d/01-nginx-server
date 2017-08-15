@@ -1,10 +1,12 @@
-#!/usr/bin/with-contenv sh
+#!/usr/bin/with-contenv ash
 
 NGINX_PATH=/etc/nginx
 NGINX_CERTS_PATH=$NGINX_PATH/certs
 
 if [ -z "$NGINX_SERVERNAME" ]; then
-  if [ ! -f "$NGINX_PATH/conf.d/default.conf"]; then
+  echo "SSL is disabled"
+  if [ ! -f "$NGINX_PATH/conf.d/default.conf" ]; then
+    echo "cp $NGINX_PATH/default.conf.sample $NGINX_PATH/conf.d/default.conf"
     cp $NGINX_PATH/default.conf.sample $NGINX_PATH/conf.d/default.conf
   fi
 else # SSL IS ENABLED
@@ -26,14 +28,15 @@ else # SSL IS ENABLED
     openssl dhparam -out $NGINX_CERTS_PATH/dhparam.pem 2048
   fi
 
-  if [ ! -f "$NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf"]; then
+  if [ ! -f "$NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf" ]; then
     cp $NGINX_PATH/default-ssl.conf.sample $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
 
-    sed -i "s@#ssl_certificate@ssl_certificate $NEXTCLOUD_CERT_DIR/$NGINX_SERVERNAME.crt;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
-    sed -i "s@#ssl_certificate_key@ssl_certificate_key $NEXTCLOUD_CERT_DIR/$NGINX_SERVERNAME.key;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
+    sed -i "s@#server_name@server_name $NGINX_SERVERNAME;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
+    sed -i "s@#ssl_certificate_pem@ssl_certificate $NGINX_CERTS_PATH/$NGINX_SERVERNAME.pem;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
+    sed -i "s@#ssl_certificate_key@ssl_certificate_key $NGINX_CERTS_PATH/$NGINX_SERVERNAME.key;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
 
     if [ -f "$NGINX_CERTS_PATH/dhparam.pem" ]; then
-      sed -i "s@#ssl_dhparam@ssl_dhparam $NEXTCLOUD_CERT_DIR/dhparam.pem;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
+      sed -i "s@#ssl_dhparam@ssl_dhparam $NGINX_CERTS_PATH/dhparam.pem;@g" $NGINX_PATH/conf.d/$NGINX_SERVERNAME.conf
     fi
   fi
 fi
