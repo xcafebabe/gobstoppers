@@ -137,7 +137,7 @@ ADD root /
 VOLUME ["/etc/nginx/conf.d", "/etc/nginx/certs", "/var/www"]
 
 # Expose port
-EXPOSE 80
+EXPOSE 80 443
 
 STOPSIGNAL SIGTERM
 
