@@ -1,5 +1,5 @@
 FROM kafebob/rpi-alpine-base:3.6
-MAINTAINER Luis Toubes <luis@toub.es>
+LABEL maintainer="Luis Toubes <luis@toub.es>"
 
 ENV NVM_VERSION=v0.33.2 NODE_VERSION=v8.4.0 ENV=/root/.ashrc
 
