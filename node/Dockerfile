@@ -1,6 +1,6 @@
 FROM kafebob/rpi-alpine:3.6
 
-ENV VERSION=v8.4.0 NPM_VERSION=5.3.0 YARN_VERSION=0.27.5
+ENV VERSION=v8.9.0 NPM_VERSION=5.5.1 YARN_VERSION=1.3.2
 
 # For base builds
 ENV CONFIG_FLAGS="--without-snapshot --fully-static" DEL_PKGS="libgcc libstdc++" RM_DIRS=/usr/include
@@ -29,8 +29,7 @@ RUN apk add --no-cache curl make gcc g++ python linux-headers binutils-gold gnup
     if [ -n "$YARN_VERSION" ]; then \
       gpg --keyserver ipv4.pool.sks-keyservers.net --recv-keys \
         6A010C5166006599AA17F08146C2130DFD2497F5 && \
-      curl -sSL -O https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz -O https://yarnpkg.com/downloads/$Y
-ARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc && \
+      curl -sSL -O https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz -O https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz.asc && \
       gpg --batch --verify yarn-v${YARN_VERSION}.tar.gz.asc yarn-v${YARN_VERSION}.tar.gz && \
       mkdir /usr/local/share/yarn && \
       tar -xf yarn-v${YARN_VERSION}.tar.gz -C /usr/local/share/yarn --strip 1 && \
