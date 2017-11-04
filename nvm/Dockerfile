@@ -1,7 +1,7 @@
 FROM kafebob/rpi-alpine-base:3.6
 LABEL maintainer="Luis Toubes <luis@toub.es>"
 
-ENV NVM_VERSION=v0.33.2 NODE_VERSION=v8.4.0 ENV=/root/.ashrc
+ENV NVM_VERSION=v0.33.6 NODE_VERSION=v8.9.0 ENV=/root/.ashrc
 
 RUN apk add --update --no-cache curl bash \
     ca-certificates openssl coreutils && \
