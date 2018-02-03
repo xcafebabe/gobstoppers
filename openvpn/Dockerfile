@@ -4,7 +4,7 @@ FROM kafebob/rpi-alpine:3.6
 
 LABEL maintainer="Luis Toubes <luis@toub.es>"
 
-COPY https://github.com/kylemanna/docker-openvpn/archive/master.zip /tmp
+ADD https://github.com/kylemanna/docker-openvpn/archive/master.zip /tmp
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
     echo "http://dl-4.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
