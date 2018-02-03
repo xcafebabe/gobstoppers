@@ -1,6 +1,6 @@
 FROM kafebob/rpi-alpine-base:3.6
 
-MAINTAINER Luis Toubes <luis@toubes>
+LABEL maintainer="Luis Toubes <luis@toub.es>"
 
 # Based on Official Docker Nginx
 # https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile
