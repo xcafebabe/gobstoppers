@@ -17,13 +17,13 @@ Container will also accept these options
 * `-s <skip_sec>` 0 is default and will skip the first N seconds of video.
 * `-t <duration_sec>` If specified creates a N second output.
 
-If you change previous command with
+See how it looks previous example command using some options:
 
 ```
-docker run --rm -v=`pwd`:/tmp/ffmpeg kafebob/video2gif -f 30 -y 320 -s 10 -t 5 video.wmv video.gif
+docker run --rm -v=`pwd`:/tmp/ffmpeg kafebob/video2gif -f 30 -y 320 -s 10 -t 5 video.mp4 video.gif
 ```
 
-It will generate a gif with the next specifications
+It will generate a gif with the following specifications:
 
 * 30 frames per second.
 * 320 pixels wide preserving the aspect ratio.
