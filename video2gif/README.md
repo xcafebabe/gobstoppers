@@ -12,10 +12,10 @@ docker run --rm -v=`pwd`:/tmp/ffmpeg kafebob/video2gif video.mp4 video.gif
 
 Container will also accept these options
 
-`-f <framerate>` 10 fps is the default and works well, but in many cases you can even get good results with lower framerates.
-`-y <yscale>` 480 px wide is the default and automatically determine the height while preserving the aspect ratio.
-`-s <skip_sec>` 0 is default and will skip the first N seconds of video.
-`-t <duration_sec>` If specified creates a N second output.
+* `-f <framerate>` 10 fps is the default and works well, but in many cases you can even get good results with lower framerates.
+* `-y <yscale>` 480 px wide is the default and automatically determine the height while preserving the aspect ratio.
+* `-s <skip_sec>` 0 is default and will skip the first N seconds of video.
+* `-t <duration_sec>` If specified creates a N second output.
 
 If you change previous command with
 
