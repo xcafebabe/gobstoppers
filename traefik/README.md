@@ -12,6 +12,6 @@ sudo docker run --rm \
   -p 80:80 \
   -p 443:443 \
   -v $PWD/acme.json:/etc/traefik/acme.json \
-  -v $PWD/traefik.toml:/etc/traefik/traefik.toml
+  -v $PWD/traefik.toml:/etc/traefik/traefik.toml \
   kafebob/rpi-traefik
 ```
