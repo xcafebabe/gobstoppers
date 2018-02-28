@@ -1,6 +1,6 @@
 # Traefik
 
-Traefik support ARM architecture but I wanted to provide custom setup
+Traefik provides official docker images for ARM architecture but I wanted to provide a custom setup
 
 ## Run
 
