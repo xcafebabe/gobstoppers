@@ -4,7 +4,9 @@
 
 Base Container, HTTP
 
-  sudo docker run --rm -p 80:80 kafebob/rpi-nginx
+```
+sudo docker run --rm -p 80:80 kafebob/rpi-nginx
+```
 
 Serve your content, HTTP
 

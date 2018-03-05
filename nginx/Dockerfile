@@ -21,7 +21,7 @@ RUN apk update && apk --no-cache add nginx && \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
 # copy root filesystem
-COPY ./src/rootfs/. /
+COPY ./rootfs/. /
 
 # Expose volumes
 VOLUME ["/etc/nginx/conf.d", "/etc/nginx/certs", "/var/www"]
