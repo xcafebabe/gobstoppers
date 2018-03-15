@@ -10,6 +10,10 @@ ARG NEXTCLOUD_GPG="2880 6A87 8AE4 23A2 8372  792E D758 99B9 A724 937A"
 ENV TZ=Etc/UTC \
     CRON_PERIOD=15m \
     DB_TYPE=sqlite3 \
+    DB_NAME=nextcloud \
+    DB_USER=nextcloud \
+    DB_PASSWORD=password \
+    DB_HOST=localhost \
     DOMAIN=nextcloud.example.com
 
 RUN apk -U upgrade \
@@ -55,7 +59,7 @@ RUN apk -U upgrade \
 
 COPY ./rootfs/. /
 
-VOLUME /data /config /apps2 /nextcloud/themes
+VOLUME /data /apps2 /nextcloud/themes /nextcloud/config
 
 WORKDIR /nextcloud
 
