@@ -60,7 +60,7 @@ if [ ! -f $AUTOCONFIG ]; then
 EOF
 
   echo "Starting automatic configuration..."
-  (cd /nextcloud; su-exec nginx:nginx php7 index.php)
+  (cd /nextcloud; exec s6-setuidgid nginx php7 index.php)
   echo "Automatic configuration finished."
 
   sed -i "s/localhost/$DOMAIN/g" $CONFIGFILE
@@ -68,5 +68,5 @@ EOF
   # The firstrunwizard gave Josh all sorts of problems, so disabling that.
   # user_external is what allows ownCloud to use IMAP for login. The contacts
   # and calendar apps are the extensions we really care about here.
-  su-exec nginx:nginx php7 -f /nextcloud/occ app:disable firstrunwizard
+  exec s6-setuidgid nginx php7 -f /nextcloud/occ app:disable firstrunwizard
 fi
