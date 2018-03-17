@@ -9,7 +9,7 @@ CONFIGFILE=/nextcloud/config/config.php
 if [ ! -f $CONFIGFILE ]; then
   # Create an initial configuration file.
   instanceid=next$(echo $DOMAIN | sha1sum | fold -w 10 | head -n 1)
-  exec s6-setuidgid nginx cat > $CONFIGFILE <<EOF;
+  cat > $CONFIGFILE <<EOF;
 <?php
 \$CONFIG = array (
   'datadirectory' => '/data',
@@ -34,13 +34,14 @@ if [ ! -f $CONFIGFILE ]; then
 );
 ?>
 EOF
+  chown nginx:nginx $CONFIGFILE
   echo "Created config file..."
 fi
 
 
 AUTOCONFIG=/nextcloud/config/autoconfig.php
 if [ ! -f $AUTOCONFIG ]; then
-  exec s6-setuidgid nginx cat > $AUTOCONFIG <<EOF;
+  cat > $AUTOCONFIG <<EOF;
 <?php
 \$AUTOCONFIG = array (
   # storage/database
@@ -58,7 +59,7 @@ if [ ! -f $AUTOCONFIG ]; then
   );
 ?>
 EOF
-
+  chown nginx:nginx $AUTOCONFIG
   echo "Starting automatic configuration..."
   (cd /nextcloud; exec s6-setuidgid nginx php7 index.php)
   echo "Automatic configuration finished."
