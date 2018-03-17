@@ -9,7 +9,7 @@ CONFIGFILE=/nextcloud/config/config.php
 if [ ! -f $CONFIGFILE ]; then
   # Create an initial configuration file.
   instanceid=next$(echo $DOMAIN | sha1sum | fold -w 10 | head -n 1)
-  cat > $CONFIGFILE <<EOF;
+  exec s6-setuidgid nginx cat > $CONFIGFILE <<EOF;
 <?php
 \$CONFIG = array (
   'datadirectory' => '/data',
@@ -40,7 +40,7 @@ fi
 
 AUTOCONFIG=/nextcloud/config/autoconfig.php
 if [ ! -f $AUTOCONFIG ]; then
-  cat > $AUTOCONFIG <<EOF;
+  exec s6-setuidgid nginx cat > $AUTOCONFIG <<EOF;
 <?php
 \$AUTOCONFIG = array (
   # storage/database
@@ -63,7 +63,7 @@ EOF
   (cd /nextcloud; exec s6-setuidgid nginx php7 index.php)
   echo "Automatic configuration finished."
 
-  sed -i "s/localhost/$DOMAIN/g" $CONFIGFILE
+  exec s6-setuidgid nginx sed -i "s/localhost/$DOMAIN/g" $CONFIGFILE
 
   # The firstrunwizard gave Josh all sorts of problems, so disabling that.
   # user_external is what allows ownCloud to use IMAP for login. The contacts
