@@ -1,0 +1,2 @@
+#!/bin/sh
+exec s6-setuidgid nginx php7 -f /nextcloud/cron.php
