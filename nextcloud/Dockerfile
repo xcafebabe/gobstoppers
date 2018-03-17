@@ -56,7 +56,8 @@ RUN apk -U upgrade \
     && update-ca-certificates \
     && apk del build-dependencies \
     && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true \
-    && chown nginx:nginx /data /apps2 /nextcloud /nextcloud/config
+    && chown nginx:nginx /data /apps2 /nextcloud /nextcloud/config \
+    && rc-service crond start && rc-update add crond
 
 COPY ./rootfs/. /
 
