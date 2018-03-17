@@ -18,6 +18,7 @@ ENV TZ=Etc/UTC \
 
 RUN apk -U upgrade \
     && apk add -t build-dependencies \
+        php7-pear php7-dev \
         gnupg \
         tar \
         build-base \
@@ -35,7 +36,7 @@ RUN apk -U upgrade \
         smbclient \
         apcu \
         redis \
-    && mkdir /nextcloud /data /config /apps2 \
+    && mkdir -p /nextcloud/config /data /apps2 \
     && cd /tmp \
     && NEXTCLOUD_TARBALL="nextcloud-${NEXTCLOUD_VERSION}.tar.bz2" \
     && wget -q https://download.nextcloud.com/server/releases/${NEXTCLOUD_TARBALL} \
@@ -54,8 +55,8 @@ RUN apk -U upgrade \
     && tar xjf ${NEXTCLOUD_TARBALL} --strip 1 -C /nextcloud \
     && update-ca-certificates \
     && apk del build-dependencies \
-    && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg \
-    && chown nginx:nginx /data /config /apps2 /nextcloud
+    && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true \
+    && chown nginx:nginx /data /apps2 /nextcloud /nextcloud/config
 
 COPY ./rootfs/. /
 
