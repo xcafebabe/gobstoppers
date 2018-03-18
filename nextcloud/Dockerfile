@@ -18,8 +18,6 @@ ENV TZ=Etc/UTC \
 
 RUN apk -U upgrade \
     && apk add -t build-dependencies \
-        php7-pear php7-dev \
-        php7-sqlite3 php7-pdo_sqlite \
         gnupg \
         tar \
         build-base \
@@ -28,12 +26,14 @@ RUN apk -U upgrade \
         pcre-dev \
         libtool \
         samba-dev \
-        && apk add \
+    && apk add \
+        php7-pear php7-dev \
+        php7-sqlite3 php7-pdo_sqlite \
         libressl \
         ca-certificates \
         libsmbclient \
         tzdata \
-        && pecl install \
+    && pecl install \
         smbclient \
         apcu \
         redis \
