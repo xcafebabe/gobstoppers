@@ -8,13 +8,14 @@ ARG NEXTCLOUD_VERSION=13.0.0
 ARG NEXTCLOUD_GPG="2880 6A87 8AE4 23A2 8372  792E D758 99B9 A724 937A"
 
 ENV TZ=Etc/UTC \
-    CRON_PERIOD=15m \
     DB_TYPE=sqlite3 \
     DB_NAME=nextcloud \
     DB_USER=nextcloud \
     DB_PASSWORD=password \
     DB_HOST=localhost \
-    DOMAIN=nextcloud.example.com
+    DOMAIN=nextcloud.example.com \
+    ADMIN_USER=admin \
+    ADMIN_PASSWORD=password
 
 RUN apk -U upgrade \
     && apk add -t build-dependencies \
@@ -27,7 +28,7 @@ RUN apk -U upgrade \
         libtool \
         samba-dev \
     && apk add \
-        php7-pear php7-dev \
+        php7-pear php7-dev php7-fileinfo \
         php7-sqlite3 php7-pdo_sqlite \
         libressl \
         ca-certificates \
@@ -57,7 +58,7 @@ RUN apk -U upgrade \
     && update-ca-certificates \
     && apk del build-dependencies \
     && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true \
-    && chown nginx:nginx /data /apps2 /nextcloud /nextcloud/config
+    && chown -R nginx:nginx /data /apps2 /nextcloud
 
 COPY ./rootfs/. /
 
