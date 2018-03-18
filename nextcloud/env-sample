@@ -1,0 +1,9 @@
+TZ=Etc/UTC
+DB_TYPE=sqlite3
+DB_NAME=nextcloud
+DB_USER=nextcloud
+DB_PASSWORD=password
+DB_HOST=localhost
+DOMAIN=nextcloud.example.com
+ADMIN_USER=admin
+ADMIN_PASSWORD=password
