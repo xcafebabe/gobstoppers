@@ -19,6 +19,7 @@ ENV TZ=Etc/UTC \
 RUN apk -U upgrade \
     && apk add -t build-dependencies \
         php7-pear php7-dev \
+        php7-sqlite3 php7-pdo_sqlite \
         gnupg \
         tar \
         build-base \
