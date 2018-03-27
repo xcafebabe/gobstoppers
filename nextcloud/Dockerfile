@@ -13,7 +13,7 @@ ENV TZ=Etc/UTC \
     DB_USER=nextcloud \
     DB_PASSWORD=password \
     DB_HOST=localhost \
-    DOMAIN=nextcloud.example.com \
+    TRUSTED_DOMAINS=(nextcloud.example.com) \
     ADMIN_USER=admin \
     ADMIN_PASSWORD=password
 

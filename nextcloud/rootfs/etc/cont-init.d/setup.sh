@@ -8,7 +8,7 @@
 CONFIGFILE=/nextcloud/config/config.php
 if [ ! -f $CONFIGFILE ]; then
   # Create an initial configuration file.
-  instanceid=next$(echo $DOMAIN | sha1sum | fold -w 10 | head -n 1)
+  instanceid=next$(echo date | sha1sum | fold -w 10 | head -n 1)
   cat > $CONFIGFILE <<EOF;
 <?php
 \$CONFIG = array (
@@ -64,10 +64,15 @@ EOF
   (cd /nextcloud; exec s6-setuidgid nginx php7 index.php)
   echo "Automatic configuration finished."
 
-  exec s6-setuidgid nginx sed -i "s/localhost/$DOMAIN/g" $CONFIGFILE
-
-  # The firstrunwizard gave Josh all sorts of problems, so disabling that.
-  # user_external is what allows ownCloud to use IMAP for login. The contacts
-  # and calendar apps are the extensions we really care about here.
   exec s6-setuidgid nginx php7 -f /nextcloud/occ app:disable firstrunwizard
+
+  if [ -z $TRUSTED_DOMAINS ]; then
+    array=$TRUSTED_DOMAINS
+    index=1
+    for domain in "${array[@]}"
+    do
+      exec s6-setuidgid nginx php7 -f /nextcloud/occ config:system:set trusted_domains $index --value=$domain
+      let index=$index+1
+    done
+  fi
 fi
