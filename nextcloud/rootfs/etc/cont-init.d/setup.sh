@@ -61,16 +61,16 @@ if [ ! -f $AUTOCONFIG ]; then
 EOF
   chown nginx:nginx $AUTOCONFIG
   echo "Starting automatic configuration..."
-  (cd /nextcloud; exec s6-setuidgid nginx php7 index.php)
+  (cd /nextcloud; s6-setuidgid nginx php7 index.php)
   echo "Automatic configuration finished."
 
-  exec s6-setuidgid nginx php7 -f /nextcloud/occ app:disable firstrunwizard
+  s6-setuidgid nginx php7 -f /nextcloud/occ app:disable firstrunwizard
 
   if [ ! -z "$TRUSTED_DOMAINS" ]; then
     index=1
     for domain in $TRUSTED_DOMAINS
     do
-      exec s6-setuidgid nginx php7 -f /nextcloud/occ config:system:set trusted_domains $index --value=$domain
+      s6-setuidgid nginx php7 -f /nextcloud/occ config:system:set trusted_domains $index --value=$domain
       let index=$index+1
     done
   fi
