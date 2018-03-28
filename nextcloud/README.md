@@ -34,7 +34,7 @@ sudo docker run --rm \
   kafebob/rpi-nextcloud
 ```
 
-Also you can provide a list of trusted domains for your Nextcloud instance.
+Also you can provide a list of space-separated trusted domains for your Nextcloud instance.
 
 ```
 sudo docker run --rm \
@@ -48,6 +48,6 @@ sudo docker run --rm \
  -e DB_USER=nextcloud \
  -e DB_PASSWORD=password \
  -e DB_HOST=localhost \
- -e TRUSTED_DOMAINS=(nextcloud.example.com 192.168.1.5) \
+ -e TRUSTED_DOMAINS="nextcloud.example.com 192.168.1.5" \
   kafebob/rpi-nextcloud
 ```

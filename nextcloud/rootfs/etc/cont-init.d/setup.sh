@@ -66,9 +66,10 @@ EOF
 
   exec s6-setuidgid nginx php7 -f /nextcloud/occ app:disable firstrunwizard
 
-  if [ -z $TRUSTED_DOMAINS ]; then
-    array=$TRUSTED_DOMAINS
+  array=($TRUSTED_DOMAINS)
+  if [ ! ${#array[@]} -eq 0 ]; then
     index=1
+    echo $array
     for domain in "${array[@]}"
     do
       exec s6-setuidgid nginx php7 -f /nextcloud/occ config:system:set trusted_domains $index --value=$domain
