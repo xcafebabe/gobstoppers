@@ -48,6 +48,6 @@ sudo docker run --rm \
  -e DB_USER=nextcloud \
  -e DB_PASSWORD=password \
  -e DB_HOST=localhost \
- -e TRUSTED_DOMAINS="nextcloud.example.com 192.168.1.5" \
+ -e TRUSTED_DOMAINS=nextcloud.example.com 192.168.1.5 \
   kafebob/rpi-nextcloud
 ```

@@ -4,6 +4,6 @@ DB_NAME=nextcloud
 DB_USER=nextcloud
 DB_PASSWORD=password
 DB_HOST=localhost
-TRUSTED_DOMAINS="127.0.0.1"
+TRUSTED_DOMAINS=127.0.0.1 example.com
 ADMIN_USER=admin
 ADMIN_PASSWORD=password
