@@ -15,9 +15,12 @@ ENV TZ=Etc/UTC \
     DB_HOST=localhost \
     TRUSTED_DOMAINS="127.0.0.1" \
     ADMIN_USER=admin \
-    ADMIN_PASSWORD=password
+    ADMIN_PASSWORD=password \
+    NGINX_UID=1000 \
+    NGINX_GID=1000
 
-RUN apk -U upgrade \
+RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories \
+    && apk -U upgrade \
     && apk add -t build-dependencies \
         gnupg \
         tar \
@@ -27,6 +30,7 @@ RUN apk -U upgrade \
         pcre-dev \
         libtool \
         samba-dev \
+        shadow \
     && apk add \
         php7-pear php7-dev php7-fileinfo \
         php7-sqlite3 php7-pdo_sqlite \
@@ -56,9 +60,12 @@ RUN apk -U upgrade \
     && echo "All seems good, now unpacking ${NEXTCLOUD_TARBALL}..." \
     && tar xjf ${NEXTCLOUD_TARBALL} --strip 1 -C /nextcloud \
     && update-ca-certificates \
+    && usermod -u ${NGINX_UID} nginx \
+    && groupmod -g ${NGINX_GID}} nginx \
     && apk del build-dependencies \
     && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true \
-    && chown -R nginx:nginx /data /apps2 /nextcloud
+    && mkdir /storage \
+    && chown -R nginx:nginx /data /apps2 /nextcloud /storage
 
 COPY ./rootfs/. /
 
