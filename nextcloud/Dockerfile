@@ -4,7 +4,7 @@ FROM kafebob/rpi-nginx-php:latest
 LABEL description="Nextcloud for Raspberry Pi" \
       maintainer="Luis Toubes <luis@toub.es>"
 
-ARG NEXTCLOUD_VERSION=13.0.0
+ARG NEXTCLOUD_VERSION=13.0.2
 ARG NEXTCLOUD_GPG="2880 6A87 8AE4 23A2 8372  792E D758 99B9 A724 937A"
 
 ENV TZ=Etc/UTC \
@@ -60,7 +60,7 @@ RUN apk -U upgrade \
     && tar xjf ${NEXTCLOUD_TARBALL} --strip 1 -C /nextcloud \
     && update-ca-certificates \
     && usermod -u ${NGINX_UID} nginx \
-    && groupmod -g ${NGINX_GID}} nginx \
+    && groupmod -g ${NGINX_GID} nginx \
     && apk del build-dependencies \
     && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true \
     && mkdir /storage \
