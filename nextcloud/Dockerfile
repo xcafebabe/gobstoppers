@@ -6,8 +6,6 @@ LABEL description="Nextcloud for Raspberry Pi" \
 
 ARG NEXTCLOUD_VERSION=13.0.2
 ARG NEXTCLOUD_GPG="2880 6A87 8AE4 23A2 8372  792E D758 99B9 A724 937A"
-ARG NGINX_UID=1000
-ARG NGINX_GID=1000
 
 ENV TZ=Etc/UTC \
     DB_TYPE=sqlite3 \
@@ -17,7 +15,9 @@ ENV TZ=Etc/UTC \
     DB_HOST=localhost \
     TRUSTED_DOMAINS="127.0.0.1" \
     ADMIN_USER=admin \
-    ADMIN_PASSWORD=password
+    ADMIN_PASSWORD=password \
+    NGINX_UID=1000 \
+    NGINX_GID=1000
 
 RUN apk -U upgrade \
     && apk add -t build-dependencies \
@@ -29,7 +29,6 @@ RUN apk -U upgrade \
         pcre-dev \
         libtool \
         samba-dev \
-        shadow \
     && apk add \
         php7-pear php7-dev php7-fileinfo \
         php7-sqlite3 php7-pdo_sqlite \
@@ -37,6 +36,7 @@ RUN apk -U upgrade \
         ca-certificates \
         libsmbclient \
         tzdata \
+        shadow \
     && pecl install \
         smbclient \
         apcu \
@@ -59,8 +59,6 @@ RUN apk -U upgrade \
     && echo "All seems good, now unpacking ${NEXTCLOUD_TARBALL}..." \
     && tar xjf ${NEXTCLOUD_TARBALL} --strip 1 -C /nextcloud \
     && update-ca-certificates \
-    && usermod -u ${NGINX_UID} nginx \
-    && groupmod -g ${NGINX_GID} nginx \
     && apk del build-dependencies \
     && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true \
     && mkdir /storage \

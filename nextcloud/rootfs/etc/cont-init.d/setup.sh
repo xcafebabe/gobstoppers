@@ -4,9 +4,12 @@
 # Nextcloud #
 #############
 
-
 CONFIGFILE=/nextcloud/config/config.php
 if [ ! -f $CONFIGFILE ]; then
+  # Change UID and GUID for Nginx first time.
+  usermod -u ${NGINX_UID} nginx
+  groupmod -g ${NGINX_GID} nginx
+
   # Create an initial configuration file.
   instanceid=next$(echo date | sha1sum | fold -w 10 | head -n 1)
   cat > $CONFIGFILE <<EOF;
