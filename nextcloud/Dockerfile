@@ -19,8 +19,7 @@ ENV TZ=Etc/UTC \
     NGINX_UID=1000 \
     NGINX_GID=1000
 
-RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories \
-    && apk -U upgrade \
+RUN apk -U upgrade \
     && apk add -t build-dependencies \
         gnupg \
         tar \
