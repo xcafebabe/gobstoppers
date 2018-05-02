@@ -9,8 +9,7 @@ if [ ! -f $CONFIGFILE ]; then
   # Change UID and GUID for Nginx first time.
   usermod -u ${NGINX_UID} nginx
   groupmod -g ${NGINX_GID} nginx
-  mkdir -p /storage
-  chown -R nginx:nginx /data /apps2 /nextcloud /storage
+  echo "Applied uid/gid changes"
 
   # Create an initial configuration file.
   instanceid=next$(echo date | sha1sum | fold -w 10 | head -n 1)

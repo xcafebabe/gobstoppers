@@ -60,7 +60,9 @@ RUN apk -U upgrade \
     && tar xjf ${NEXTCLOUD_TARBALL} --strip 1 -C /nextcloud \
     && update-ca-certificates \
     && apk del build-dependencies \
-    && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true
+    && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true \
+    && mkdir -p /storage \
+    && chown -R nginx:nginx /data /apps2 /nextcloud /storage
 
 COPY ./rootfs/. /
 
