@@ -6,10 +6,23 @@
 
 CONFIGFILE=/nextcloud/config/config.php
 if [ ! -f $CONFIGFILE ]; then
-  # Change UID and GUID for Nginx first time.
-  usermod -u ${NGINX_UID} nginx
-  groupmod -g ${NGINX_GID} nginx
-  echo "Applied uid/gid changes"
+
+  # Apply uid/gid mods
+  OLDUID=`id -u nginx`
+  OLDGID=`id -g nginx`
+  NEWUID=${NGINX_UID:-${OLDUID}}
+  NEWGID=${NGINX_GID:-${OLDGID}}
+  echo "${NEWUID} uid selected for user nginx"
+  echo "${NEWGID} gid selected for group nginx"
+
+  usermod -u ${NEWUID} nginx
+  groupmod -g ${NEWGID} nginx
+
+  find /var /data /apps2 /nextcloud -user ${OLDUID} -exec chown -h ${NEWUID} {} \;
+  find /var /data /apps2 /nextcloud -group ${OLDGID} -exec chgrp -h ${NEWGID} {} \;
+  /data /apps2 /nextcloud
+  usermod -g ${NEWGID} nginx
+  echo "Applied uid/gid mods"
 
   # Create an initial configuration file.
   instanceid=next$(echo date | sha1sum | fold -w 10 | head -n 1)

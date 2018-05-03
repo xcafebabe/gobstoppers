@@ -16,8 +16,8 @@ ENV TZ=Etc/UTC \
     TRUSTED_DOMAINS="127.0.0.1" \
     ADMIN_USER=admin \
     ADMIN_PASSWORD=password \
-    NGINX_UID=1000 \
-    NGINX_GID=1000
+    STORAGE_UID=1000 \
+    STORAGE_GID=1000
 
 RUN apk -U upgrade \
     && apk add -t build-dependencies \
@@ -36,7 +36,6 @@ RUN apk -U upgrade \
         ca-certificates \
         libsmbclient \
         tzdata \
-        shadow \
     && pecl install \
         smbclient \
         apcu \
@@ -60,9 +59,8 @@ RUN apk -U upgrade \
     && tar xjf ${NEXTCLOUD_TARBALL} --strip 1 -C /nextcloud \
     && update-ca-certificates \
     && apk del build-dependencies \
-    && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true \
-    && mkdir -p /storage \
-    && chown -R nginx:nginx /data /apps2 /nextcloud /storage
+    && chown -R nginx:nginx /data /apps2 /nextcloud \
+    && rm -rf /var/cache/apk/* /tmp/* /root/.gnupg || true
 
 COPY ./rootfs/. /
 
