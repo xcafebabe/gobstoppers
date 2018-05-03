@@ -16,8 +16,8 @@ ENV TZ=Etc/UTC \
     TRUSTED_DOMAINS="127.0.0.1" \
     ADMIN_USER=admin \
     ADMIN_PASSWORD=password \
-    STORAGE_UID=1000 \
-    STORAGE_GID=1000
+    NGINX_UID=1000 \
+    NGINX_GID=1000
 
 RUN apk -U upgrade \
     && apk add -t build-dependencies \
@@ -36,6 +36,7 @@ RUN apk -U upgrade \
         ca-certificates \
         libsmbclient \
         tzdata \
+        shadow \
     && pecl install \
         smbclient \
         apcu \
