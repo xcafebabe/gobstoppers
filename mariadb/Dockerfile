@@ -11,6 +11,6 @@ RUN apk update && \
     # clear cache
     rm -rf /var/cache/apk/*
 
-COPY ./src/rootfs/. /
+COPY ./rootfs/. /
 
 VOLUME /data
