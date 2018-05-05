@@ -35,6 +35,7 @@ RUN apk -U upgrade \
         libressl \
         ca-certificates \
         libsmbclient \
+        mariadb-client \
         tzdata \
         shadow \
     && pecl install \
