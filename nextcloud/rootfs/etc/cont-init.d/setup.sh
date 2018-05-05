@@ -17,12 +17,13 @@ if [ ! -f $CONFIGFILE ]; then
 
   usermod -u ${NEWUID} nginx
   groupmod -g ${NEWGID} nginx
-
-  find /var /data /apps2 /nextcloud -user ${OLDUID} -exec chown -h ${NEWUID} {} \;
-  find /var /data /apps2 /nextcloud -group ${OLDGID} -exec chgrp -h ${NEWGID} {} \;
-  /data /apps2 /nextcloud
-  usermod -g ${NEWGID} nginx
   echo "Applied uid/gid mods"
+  find /var /data /apps2 /nextcloud -user ${OLDUID} -exec chown -h ${NEWUID} {} \;
+  echo "Applied chown"
+  find /var /data /apps2 /nextcloud -group ${OLDGID} -exec chgrp -h ${NEWGID} {} \;
+  echo "Applied chgrp"
+  usermod -g ${NEWGID} nginx
+  echo "Done uid/gid mods"
 
   # Create an initial configuration file.
   instanceid=next$(echo date | sha1sum | fold -w 10 | head -n 1)
