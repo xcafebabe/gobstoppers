@@ -13,7 +13,7 @@ sed -i "/FROM/ s:.*:FROM hypriot/rpi-alpine-scratch:" builder/Dockerfile
 sudo docker build -t alpine-builder builder
 
 if [ -z "$ALPINE_VERSION" ]; then
-  export ALPINE_VERSION="3.6"
+  export ALPINE_VERSION="3.9"
 fi
 
 if [ -z "$ALPINE_CUSTOM_IMAGE" ]; then

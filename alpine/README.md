@@ -10,18 +10,18 @@ cd gobstoppers/alpine && \
 ./buildAlpineImage.sh
 ```
 
-By default is going to use as image name `kafebob/rpi-alpine` and as tag version `3.6`
+By default is going to use as image name `kafebob/rpi-alpine` and as tag version `3.9`
 
 You can change these names creating two environment variables
 
 ```
-export ALPINE_VERSION=3.6  && \
+export ALPINE_VERSION=3.9  && \
 export ALPINE_CUSTOM_IMAGE=kafebob/rpi-alpine
 ```
 
 ## Alpine Base
 
-This image includes [S6 overlay](https://github.com/just-containers/s6-overlay) and a Dnsmasq hack inspired from [sillelien/base-alpine](https://github.com/sillelien/base-alpine) image
+This image includes [S6 overlay](https://github.com/just-containers/s6-overlay)
 
 Either you could pull the image from Docker Hub
 
