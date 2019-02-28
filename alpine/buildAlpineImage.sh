@@ -4,10 +4,10 @@
 if [ ! -d "docker-alpine" ]; then
   git clone https://github.com/gliderlabs/docker-alpine.git
 fi
-cd docker-alpine/
 
-# the builder image has to be FROM a rpi based alpine
-sed -i "/FROM/ s:.*:FROM hypriot/rpi-alpine-scratch:" builder/Dockerfile
+# Using prepared builder image
+cp builder/Dockerfile docker-alpine/builder
+cd docker-alpine/
 
 # build the builder image
 sudo docker build -t alpine-builder builder
