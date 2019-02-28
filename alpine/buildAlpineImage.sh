@@ -27,7 +27,7 @@ sudo docker run --rm --name alpine-build-v${ALPINE_VERSION} alpine-builder -s -t
 sudo docker build -t ${ALPINE_CUSTOM_IMAGE}:${ALPINE_VERSION} versions/gliderlabs-${ALPINE_VERSION}
 
 # Remove alpine-builder
-sudo docker rm alpine-builder
+sudo docker rmi alpine-builder
 
 # Builded ok
 echo "Successfully built. Try:  sudo docker run --rm -it --entrypoint /bin/sh --name alpine2 ${ALPINE_CUSTOM_IMAGE}"
