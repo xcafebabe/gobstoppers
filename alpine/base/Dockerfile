@@ -1,4 +1,4 @@
-FROM kafebob/rpi-alpine:3.6
+FROM kafebob/rpi-alpine:3.9
 LABEL maintainer="Luis Toubes <luis@toub.es>"
 
 COPY rootfs /
