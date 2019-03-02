@@ -10,18 +10,18 @@ cd gobstoppers/alpine && \
 ./buildAlpineImage.sh
 ```
 
-By default is going to use as image name `kafebob/rpi-alpine` and as tag version `3.9`
+By default is going to use as image name `kafebob/rpi-alpine` and as alpine version `3.9`
 
-You can change these names creating two environment variables
+You can change these names by creating two environment variables
 
 ```
 export ALPINE_VERSION=3.9  && \
 export ALPINE_CUSTOM_IMAGE=kafebob/rpi-alpine
 ```
 
-## Alpine Base
+# Alpine Base
 
-This image includes [S6 overlay](https://github.com/just-containers/s6-overlay)
+This image is based on `kafebob/rpi-alpine` but also includes [S6 overlay](https://github.com/just-containers/s6-overlay)
 
 Either you could pull the image from Docker Hub
 
@@ -29,7 +29,7 @@ Either you could pull the image from Docker Hub
 sudo docker pull kafebob/rpi-alpine-base
 ```
 
-or you could use the image locally
+or you could buil it locally
 
 ```
 sudo docker build -t kafebob/rpi-alpine-base:latest base
