@@ -1,13 +1,13 @@
 # Credits: https://github.com/kylemanna/docker-openvpn
 
-FROM kafebob/rpi-alpine:3.6
+FROM kafebob/rpi-alpine:3.19
 
 LABEL maintainer="Luis Toubes <luis@toub.es>"
 
 ADD https://github.com/kylemanna/docker-openvpn/archive/master.zip /tmp
 
-RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
+RUN echo "https://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/repositories && \
+    echo "https://dl-4.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
     apk add --update openvpn iptables bash easy-rsa openvpn-auth-pam google-authenticator pamtester unzip && \
     unzip /tmp/master.zip -d /tmp && \
     cp /tmp/docker-openvpn-master/bin/* /usr/local/bin && \
@@ -21,8 +21,6 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community/" >> /etc/apk/reposi
 ENV OPENVPN /etc/openvpn
 ENV EASYRSA /usr/share/easy-rsa
 ENV EASYRSA_PKI $OPENVPN/pki
-ENV EASYRSA_VARS_FILE $OPENVPN/vars
-
 # Prevents refused client connection because of an expired CRL
 ENV EASYRSA_CRL_DAYS 3650
 
